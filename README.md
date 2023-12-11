@@ -11,18 +11,6 @@ Variety Food Truck is an imaginary project developed as part of a school course.
 - Dynamic calculation of the total cost of the order.
 - Interactive user interface in the terminal.
 
-## How to Use
-
-To run the project, clone the repository and execute the `main.py` file in a Python interpreter.
-
-```bash
-git clone [Repository URL]
-cd [Repository Name]
-python main.py
-```
-
-Follow the on-screen instructions to navigate through the menu and select items.
-
 ## Technologies
 
 - Python 3.12.0
