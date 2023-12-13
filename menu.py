@@ -79,24 +79,24 @@ while place_order:
         i += 1
     # Get the customer's input
     print(menu_dashes)
-    menu_category = input("Type menu number: ")
+    menu_selection = input("Type menu number: ")
     # Check if the customer's input is a number
-    if menu_category.isdigit():
+    if menu_selection.isdigit():
         # Check if the customer's input is a valid option
-        if int(menu_category) in menu_items.keys():
+        if int(menu_selection) in menu_items.keys():
             # Save the menu category name to a variable
-            menu_category_name = menu_items[int(menu_category)]
+            menu_selection_name = menu_items[int(menu_selection)]
             # Print out the menu category name they selected
             print(menu_dashes)
-            print(f"You selected {menu_category_name}")
-            # Print out the menu options from the menu_category_name
-            print(f"What {menu_category_name} item would you like to order?")
+            print(f"You selected {menu_selection_name}")
+            # Print out the menu options from the menu_selection_name
+            print(f"What {menu_selection_name} item would you like to order?")
             print(menu_dashes)
             i = 1
             menu_items = {}
             print("Item # | Item name                | Price")
             print("-------|--------------------------|-------")
-            for key, value in menu[menu_category_name].items():
+            for key, value in menu[menu_selection_name].items():
                 # Check if the menu item is a dictionary to handle differently
                 if type(value) is dict:
                     for key2, value2 in value.items():
@@ -128,20 +128,22 @@ while place_order:
             elif item_selection.isdigit():
                 item_number = int(item_selection)
                 if item_number in menu_items:
-                    # Preuzimanje detalja izabranog artikla iz menu_items
+                    # Get the details of the selected item from menu_items
                     selected_item = menu_items[item_number]
                     item_name = selected_item["Item name"]
                     item_price = selected_item["Price"]
                      # Ask the customer for the quantity of the menu item
                     while True:
-                        quantity = input(f"How many '{item_name}' would you like to order? ")
-                        if quantity.isdigit() and int(quantity) > 0:
-                            quantity = int(quantity)
+                        quantity_input = input(f"How many '{item_name}' would you like to order? ")
+
+                        if quantity_input.isdigit() and int(quantity_input) > 0:
+                            quantity = int(quantity_input)
                             break
-                        # Check if the quantity is a number, default to 1 if not
                         else:
                             print(f"Invalid input. Setting the quantity for '{item_name}' to 1.")
                             quantity = 1
+                            break  # Ovde dodajemo break da bismo izašli iz petlje ako je unos nevalidan
+
                     # Add the item name, price, and quantity to the order list
                     order_item = {
                         "Item name": item_name,
@@ -166,17 +168,17 @@ while place_order:
     print(f"You currently have {len(orders)} items in your cart.")
     print(f"Total cost so far: ${total_cost:.2f}")
     # Ask the customer if they would like to order anything else
+    
     while True:
-        print(menu_dashes)
         continue_ordering = input("Would you like to add more items? (Y)es or (N)o: ").strip().lower()
-        print(menu_dashes)
-        if continue_ordering == 'y':
-            break  # Exit the keep ordering question loop
-        elif continue_ordering == 'n':
-            place_order = False  
-            break  # Exit the keep ordering question loop
-        else:
-            print("Invalid input. Please enter 'Y' for yes or 'N' for no.")
+        match continue_ordering:
+            case 'y':
+                break  # Exit the keep ordering question loop
+            case 'n':
+                place_order = False
+                break  # Exit the keep ordering question loop
+            case _:
+                print("Invalid input. Please enter 'Y' for yes or 'N' for no.")
     if not place_order:
         break
 # Print out the customer's order
@@ -201,6 +203,6 @@ print("--------------------------|--------|----------")
 print("Total cost of your order:   ${:.2f}".format(total_cost))
 print(menu_dashes)
 print("\nThank you for choosing the Variety Food Truck."
-      "Enjoy your meal and have a great day!")
+      "\nEnjoy your meal and have a great day!")
 print("\n")
 print(menu_dashes)
